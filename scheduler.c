@@ -1,3 +1,5 @@
+
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -23,7 +25,7 @@ int main()
 {
     load();
     
-   int input; 
+   int input;  /* variable */
    nodelay(stdscr, FALSE);
    initscr();
 
