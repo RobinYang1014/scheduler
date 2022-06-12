@@ -48,7 +48,9 @@ int main()
     save();
 }
 
-void  list(){
+
+void  list()
+{
     struct Item* temp = (struct Item*) malloc(sizeof(struct Item));
     int counter = 1;
     temp = gStart;
@@ -63,7 +65,8 @@ void  list(){
 }
 
 
-void  add(){
+void  add()
+{
     int* input = (int*) malloc(sizeof(int) * 100);
     char* todo = (char*) malloc(sizeof(char) * 100);
 
@@ -117,14 +120,12 @@ void  add(){
         }
     }
 
-
-
-    
     items++;
-
 }
 
-void delete(){
+
+void delete()
+{
     int* input = (int*) malloc(sizeof(int) * 100);
 
     do{
@@ -150,10 +151,11 @@ void delete(){
 
     
     items--;
-
 }
 
-void update(){
+
+void update()
+{
     int* input = (int*) malloc(sizeof(int) * 100);
 
     do{
@@ -175,11 +177,11 @@ void update(){
     } while(strlen(todo) > 80);
 
     temp->sched = todo;
-   
 }
 
 
-int compareDate(int x, int y){
+int compareDate(int x, int y)
+{
     int xtotal = (x%10000)*365 + (x/1000000)*31 + ((x/10000)%100);
     int ytotal = (y%10000)*365 + (y/1000000)*31 + ((y/10000)%100);
 
@@ -194,7 +196,8 @@ int compareDate(int x, int y){
 }
 
 
-void load(){
+void load()
+{
     FILE* fptr;
     if((fptr = fopen("/Users/robinyang/schedule.db", "r")) != NULL){
         struct Item* curr;
@@ -228,7 +231,9 @@ void load(){
 
 }
 
-void save(){
+
+void save()
+{
     FILE* fptr;
     fptr = fopen("/Users/robinyang/schedule.db", "w");
     struct Item* item = (struct Item*) malloc(sizeof(struct Item));
