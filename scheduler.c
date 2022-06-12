@@ -1,14 +1,8 @@
-
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <ncurses.h>
 #include "item.h"
-
-//#define TRUE (1)
-//#define FALSE (0)
 
 void list();
 void add();
@@ -26,17 +20,13 @@ int main()
     load();
     
    int input;  /* variable */
-   nodelay(stdscr, FALSE);
-   initscr();
 
 
-    do
+    while (input != 'q')
     {
-    printw("Enter a command - l(ist), a(dd), d(elete), u(pdate), q(uit): ");
-    refresh();
+        printf("Enter a command - l(ist), a(dd), d(elete), u(pdate), q(uit): ");
+        input = getc(stdin);
 
-    input = getch();
-    printw("\n");
         switch( input ) 
         {
         case 'l':
@@ -52,7 +42,8 @@ int main()
             update();
             break;
         }
-    } while ( input != 'q');
+        getc(stdin);
+    }
 	     
     save();
 }
@@ -62,13 +53,12 @@ void  list(){
     int counter = 1;
     temp = gStart;
     while(temp != NULL){
-        printw("[%d] %08d: %s\n", counter,temp->date, temp->sched);
+        printf("[%d] %08d: %s\n", counter,temp->date, temp->sched);
         temp = temp->next;
         counter++;
     }
     if(items == 0){
-        printw("Your schedule is empty\n");
-        refresh();
+        printf("Your schedule is empty\n");
     }
 }
 
@@ -78,9 +68,8 @@ void  add(){
     char* todo = (char*) malloc(sizeof(char) * 100);
 
     do{
-        printw("Enter date\n");
-        refresh();
-        scanw("%d", input);
+        printf("Enter date\n");
+        scanf("%d", input);
     } while((*input/1000000) > 12 || (*input/1000000) < 0 || ((*input/10000)%100) > 31 
             || ((*input/10000)%100) < 0 || *input%10000 < 2000);
 
@@ -89,9 +78,8 @@ void  add(){
     newItem->date = *input;
 
     do{
-        printw("Enter todo\n");
-        refresh();
-        scanw("%s", todo);
+        printf("Enter todo\n");
+        scanf("%s", todo);
     } while(strlen(todo) > 80);
 
     newItem->sched = todo;
@@ -140,17 +128,15 @@ void delete(){
     int* input = (int*) malloc(sizeof(int) * 100);
 
     do{
-        printw("Enter item to delete: ");
-        refresh();
-        scanw("%d", input);
+        printf("Enter item to delete: ");
+        scanf("%d", input);
     } while((*input <1) || (*input> items));
 
     struct Item* temp = (struct Item*) malloc(sizeof(struct Item));
     temp = gStart;
 
     if(items ==  0){
-        printw("Add to schedule first");
-        refresh();
+        printf("Add to schedule first");
     }
     else if(*input == 1){
         gStart = gStart->next;
@@ -171,9 +157,8 @@ void update(){
     int* input = (int*) malloc(sizeof(int) * 100);
 
     do{
-        printw("Enter item to update: ");
-        refresh();
-        scanw("%d", input);
+        printf("Enter item to update: ");
+        scanf("%d", input);
     } while((*input <1) || (*input> items));
 
     struct Item* temp = (struct Item*) malloc(sizeof(struct Item));
@@ -185,9 +170,8 @@ void update(){
 
     char* todo = (char*) malloc(sizeof(char) * 100);
     do{
-        printw("Enter todo\n");
-        refresh();
-        scanw("%s", todo);
+        printf("Enter todo\n");
+        scanf("%s", todo);
     } while(strlen(todo) > 80);
 
     temp->sched = todo;
